@@ -1,32 +1,31 @@
 const express = require("express");
-
 const db = require("../data/dbConfig");
-
 const router = express.Router();
 
 router.get("/", (req, res) => {
   //   db.select()
   //     .from("accounts")
-  db.get()
+  db("accounts")
     .then((accounts) => {
-      res.json(accounts);
+      res.status(200).json(accounts);
     })
     .catch((err) => {
       res.status(500).json({ message: "error retrieving accounts" });
     });
 });
 
-// router.get('/:id', (req, res)=>{
-//     const {id}=req.params
-//     db.select()
-//     .from('accounts')
-//     .where({id})
-//     .then(accounts=>{
-//         const accounts =
-
-//     })
-
-// })
+router.get("/:id", (req, res) => {
+  const { id } = req.params;
+  db.select()
+    .from("accounts")
+    .where({ id })
+    .then((account) => {
+      res.status(200).json(account);
+    })
+    .catch((err) => {
+      res.status(500).json({ success: false, err });
+    });
+});
 
 router.post("/", (req, res) => {
   db("accounts")
