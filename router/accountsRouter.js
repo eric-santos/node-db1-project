@@ -29,7 +29,7 @@ router.get("/:id", (req, res) => {
 
 router.post("/", (req, res) => {
   db("accounts")
-    .insert(accountData)
+    .insert(req.body)
     .then((account) => {
       res.status(201).json(account);
     })
